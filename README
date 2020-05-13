@@ -1,0 +1,29 @@
+KEKTUPLE
+========
+
+Kektuple is an all-Python tool for researching the Barnette Conjecture.
+
+The goal is to visualize and interact (and "play") with C3CBP graphs which
+would be inconvenient to draw by hand. While more general and more
+efficient graph manipulators exist, kektuple aims to be a simple tool which
+makes the key properties of C3CBP graphs interactively accessible. So far,
+kektuple's main feature is an implementation of the "R0" and "R4" expansions
+which Holton and McKay (1984) proved could produce all Barnette graphs. 
+
+The key files are 
+kektup_helpers - self 
+kektup         - the basic C3CBP class
+iektup         - "interactive kektup"
+vektup         - "visual kektup"
+viektup        - "visual interactive kektup"
+shektup        - "shell kektup"
+
+To try out the code, clone the repository and run:
+python shektup.py
+
+Kektuple was created by researchers from the University of Dallas under
+the supervision of Robert Hochberg. The code was mostly written by Ted Morin.
+
+Kektuple is not yet associated with a peer reviewed publication.
+
+C3CBP => C3C2P => "kek" two p => "kektup"
