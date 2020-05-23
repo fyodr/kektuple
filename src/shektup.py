@@ -61,7 +61,7 @@ class Shektup(cmd.Cmd):
         if (not 0 <= pair[0]  < nedges) or (not 0 <= pair[1] < nedges):
             print("Invalid edge choice: {}".format(arg))
             return
-        if self.v.g.r0exp(*pair):
+        if self.v.r0exp(*pair):
             print("Edge pair not eligible: {}".format(arg))
 
     def do_r4exp(self,arg):
