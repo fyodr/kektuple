@@ -306,15 +306,54 @@ class Kektup:
         return (bad_edge_face, bad_face_vert, bad_vert_edge)
 
     # check that the graph is really c3cbp/Barnette/kektup
-    def check_barnette(g):
-        # check cubic
+    def check_properties(g):
+        # misc speed-ups
+        if (len(g.verts) % 2) != 0:
+            return 0
+        # check cubic (linear)
+        for v in g.verts:
+            if len(v) != 3:
+                return 0
+        # check bipartite - two color the graph (linear)
+        half_nverts = len(g.verts)/2
+        black_set = set([0])
+        white_set = set([])
+        q = Queue()
+        q.put(0)
+        while not q.empty():
+            v = q.get()
+            # iterate over 1st neighbors
+            for e1 in g.verts[v].edges:
+                w = g.edges[e1].get_other_vert(v)
+                if w in black_set:
+                    return 0
+                if w in white_set:
+                    continue
+                white_set.add(w)
+                # iterate over 2nd neighbors
+                for e2 in g.verts[w].edges:
+                    b = g.edges[e2].get_other_vert(w)
+                    if b in white_set:
+                        return 0
+                    if b in black_set:
+                        continue
+                    black_set.add(b)
+                    q.put(b)
+        # check 3-connected - check for faces with TWO common edges (quadratic)
+        for f1 in range(len(g.faces)):
+            visited = set()
+            for e in g.faces[f1].edges:
+                f2 = g.edges[e].get_other_face(f1)
+                if f2 in visited:
+                    return 0
+                else :
+                    visited.add(f2)
+        # check planar - Boyer-Myrvold planar embedding search (linear)
         # TODO
-        # check bipartite
-        # TODO
-        # check 3-connected? - check if faces having two common edges
-        # TODO
-        # check planar? - check if, um... huh.
-        # TODO
+        # see https://github.com/jgrapht/jgrapht/pull/795 for java example
+        # see https://github.com/hagberg/planarity for C and Python interface)
+        # for user convenience, pure python code should be used here
+        # it would also be very useful to have python planar embedding code
         return 1
 
     # return a list of edge pairs elligible for R0 expansion
